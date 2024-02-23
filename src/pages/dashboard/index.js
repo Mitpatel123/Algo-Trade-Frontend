@@ -26,12 +26,18 @@ const useStyles = makeStyles()((theme) => {
             color: theme.palette.info.main,
             cursor: 'pointer',
             padding: '35px'
+        },
+        gridBox: {
+            backgroundColor: theme.palette.primary.main,
+            padding: 5,
+            borderRadius: 5
         }
     };
 });
 const Dashboard = () => {
     const { classes } = useStyles()
     const theme = useTheme()
+
     return (
         <PageContainer>
             <Grid container xs={12} sm={12} md={12} lg={12} xxl={12} gap={4}>
@@ -50,12 +56,16 @@ const Dashboard = () => {
                 <Grid item>
                     <SummaryGrid label={"Execute Trade"} className={classes.executeTrade} fontSize="29px" />
                 </Grid>
-                <Grid item container xs={12} sm={12} md={12} lg={12} xxl={12} >
-                    <Grid item xs={12} sm={12} md={5} lg={5} xxl={5} bgcolor={theme.palette.primary.main}>
-                        sad
+                <Grid item spacing={1} container xs={12} sm={12} md={12} lg={12} xxl={12} >
+                    <Grid item xs={12} sm={12} md={5} lg={5} xxl={5}>
+                        <Box className={classes.gridBox}>
+                            sad
+                        </Box>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} bgcolor={theme.palette.primary.main}>
-                        sad
+                    <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} >
+                        <Box className={classes.gridBox}>
+                            sad
+                        </Box>
                     </Grid>
                 </Grid>
             </Grid>
