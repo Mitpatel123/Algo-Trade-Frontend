@@ -92,6 +92,23 @@ const useStyles = makeStyles()((theme) => {
 const Dashboard = () => {
     const { classes } = useStyles()
     const theme = useTheme()
+    const data = [
+        { icon: Sensex, name: 'Sensex', price: 2351.00, changes: '+1.85%' },
+        { icon: FinNifty, name: 'Fin Nifty', price: 2351.00, changes: '-1.85%' },
+        { icon: MidCap, name: 'Mid cap', price: 2351.00, changes: '-1.85%' },
+        { icon: Nifty_50, name: 'Nifty 50', price: 2351.00, changes: '-1.85%' },
+        { icon: BankNifty, name: 'Bank Nifty', price: 2351.00, changes: '+1.85%' },
+    ];
+    const dataBuy = [
+        { icon: Sensex, name: 'Sensex', price: 2351.00, buyPrice: '2300.00' },
+        { icon: FinNifty, name: 'Fin Nifty', price: 2351.00, buyPrice: '2300.00' },
+        { icon: MidCap, name: 'Mid cap', price: 2351.00, buyPrice: '2300.00' },
+    ];
+    const dataSell = [
+        { icon: Sensex, name: 'Sensex', price: 2351.00, buyPrice: '2300.00', type: 'Market' },
+        { icon: FinNifty, name: 'Fin Nifty', price: 2351.00, buyPrice: '2300.00', type: 'Market' },
+        { icon: MidCap, name: 'Mid cap', price: 2351.00, buyPrice: '2300.00', type: 'Market' },
+    ];
     return (
         <PageContainer>
             <Grid container xs={12} sm={12} md={12} lg={12} xxl={12} gap={4}>
