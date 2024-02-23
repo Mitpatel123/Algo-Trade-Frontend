@@ -1,28 +1,30 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-// import Loader from './Components/Loader';
+import React from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "./theme";
-// import { ProtectedRoutes } from "./Routes/ProtectedRoutes";
 import Login from "./pages/login";
 import Layout from "./components/layout";
 import Dashboard from "./pages/dashboard";
 
+const isAuthenticated = () => {
+  return true;
+};
+
+// ProtectedRoute component
+const ProtectedRoute = ({ element }) => {
+  return isAuthenticated() ? <Layout>{element}</Layout> : <Navigate to="/login" />;
+};
 
 function App() {
   return (
     <BrowserRouter basename={"/"}>
       <ThemeProvider theme={lightTheme}>
-        {/* <Loader /> */}
-        <Layout>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            {/* <Route element={<ProtectedRoutes />}> */}
-            <Route path="/" element={<Dashboard />} />
-
-            {/* </Route> */}
-          </Routes>
-        </Layout>
         <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/"
+            element={<ProtectedRoute element={<Dashboard />} />}
+          />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

@@ -5,6 +5,8 @@ import { createTheme } from "@mui/material/styles";
 export const defaultPrimaryColor = "#0B253D";
 export const defaultInfoColor = "#419DF1";
 export const defaultWarningColor = "#FFBE5E";
+export const defaultError = "#FF5555";
+export const defaultSucces = "#6EBE52";
 
 export const defaultBgLightBlue = "#EAF4FE";
 export const defaultBgLightBlue2 = "#00AEEF";
@@ -45,6 +47,12 @@ export const lightTheme = createTheme({
     },
     info: {
       main: defaultInfoColor,
+    },
+    error: {
+      main: defaultError
+    },
+    success: {
+      main: defaultSucces
     },
     bgLightBlue: {
       main: defaultBgLightBlue,
@@ -225,6 +233,7 @@ export const darkTheme = createTheme({
       textTransform: "none",
     },
   },
+
   components: {
     // Name of the component
     MuiButtonBase: {
@@ -243,3 +252,26 @@ export const darkTheme = createTheme({
     // },
   },
 });
+export const theme = createTheme({
+
+  overrides: {
+    MuiTableContainer: {
+      root: {
+        backgroundColor: '#FFFFFF',
+      },
+      MuiTable: {
+        root: {
+          fontSize: '16px',
+          color: '#fff'
+        },
+        MuiTableCell: {
+          root: {
+            fontSize: '20px',
+            color: '#fff'
+
+          },
+        },
+      },
+    },
+  },
+})

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Label = (props) => {
     return (
-        <Typography fontSize={props?.fontSize} fontWeight={props.fontWeight} fontFamily={'"Poppins",sans-serif'}>{props?.text}</Typography>
+        <Typography fontSize={props?.fontSize} color={props?.color} fontWeight={props.fontWeight} fontFamily={'"Poppins",sans-serif'}>{props?.text}</Typography>
     )
 }
 
