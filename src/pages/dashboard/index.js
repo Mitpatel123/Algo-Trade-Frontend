@@ -73,19 +73,19 @@ const useStyles = makeStyles()((theme) => {
         buyTbl: {
             '& .MuiTableRow-root ': {
                 transition: '0.2s ease',
-                '&:hover': {
-                    backgroundColor: theme.palette.info.main,
-                    borderRadius: 5
-                }
+                // '&:hover': {
+                //     backgroundColor: theme.palette.info.main,
+                //     borderRadius: 5,                     
+                // }
             },
         },
         sellTbl: {
             '& .MuiTableRow-root ': {
                 transition: '0.2s ease',
-                '&:hover': {
-                    backgroundColor: theme.palette.error.main,
-                    borderRadius: 5
-                }
+                // '&:hover': {
+                //     backgroundColor: theme.palette.error.main,
+                //     borderRadius: 5
+                // }
             },
         }
     };
@@ -160,8 +160,8 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} >
                         <Box className={classes.gridBox}>
-                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"}  marginBottom={'24px'}/>
-                            <DoubleLineChart/>
+                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} marginBottom={'24px'} />
+                            <DoubleLineChart />
                         </Box>
                     </Grid>
                 </Grid>
