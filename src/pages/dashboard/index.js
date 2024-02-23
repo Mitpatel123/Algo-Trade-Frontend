@@ -9,7 +9,18 @@ import BankNifty from "../../components/Icons/BankNifty.svg"
 import FinNifty from "../../components/Icons/FinNifty.svg"
 import MidCap from "../../components/Icons/MidCap.svg"
 import DoubleLineChart from '../../components/dashboard/DoubleLineChart';
-
+const commonTableStyle = {
+    '& .MuiTableBody-root ': {
+        '& .MuiTableRow-root ': {
+            transition: '0.2s ease',
+            '&:hover': {
+                '& .MuiTableCell-root ': {
+                    color: '#fff !important',
+                }
+            }
+        },
+    },
+};
 const useStyles = makeStyles()((theme) => {
     return {
         investmentSummary: {
@@ -71,23 +82,51 @@ const useStyles = makeStyles()((theme) => {
             }
         },
         buyTbl: {
-            '& .MuiTableRow-root ': {
-                transition: '0.2s ease',
-                // '&:hover': {
-                //     backgroundColor: theme.palette.info.main,
-                //     borderRadius: 5,                     
-                // }
+            '& .MuiTableBody-root ': {
+                '& .MuiTableRow-root ': {
+                    transition: '0.2s ease',
+                    '&:hover': {
+                        backgroundColor: theme.palette.info.main,
+                        borderRadius: 5,
+                        '& .MuiTableCell-root ': {
+                            color: '#fff !important',
+                        }
+                    }
+                },
             },
+
         },
         sellTbl: {
-            '& .MuiTableRow-root ': {
-                transition: '0.2s ease',
-                // '&:hover': {
-                //     backgroundColor: theme.palette.error.main,
-                //     borderRadius: 5
-                // }
+            '& .MuiTableBody-root ': {
+                '& .MuiTableRow-root ': {
+                    transition: '0.2s ease',
+                    '&:hover': {
+                        backgroundColor: theme.palette.error.main,
+                        borderRadius: 5,
+                        '& .MuiTableCell-root ': {
+                            color: '#fff !important',
+                        }
+                    }
+                },
             },
-        }
+        },
+        buyTbl: {
+            ...commonTableStyle,
+            '& .MuiTableBody-root': {
+                '& .MuiTableRow-root:hover': {
+                    backgroundColor: theme.palette.info.main,
+                },
+            }
+        },
+        sellTbl: {
+            ...commonTableStyle,
+            '& .MuiTableBody-root': {
+
+                '& .MuiTableRow-root:hover': {
+                    backgroundColor: theme.palette.error.main,
+                },
+            },
+        },
     };
 });
 const Dashboard = () => {
