@@ -8,6 +8,7 @@ import Nifty_50 from "../../components/Icons/Nifty_50.svg"
 import BankNifty from "../../components/Icons/BankNifty.svg"
 import FinNifty from "../../components/Icons/FinNifty.svg"
 import MidCap from "../../components/Icons/MidCap.svg"
+import DoubleLineChart from '../../components/dashboard/DoubleLineChart';
 
 const useStyles = makeStyles()((theme) => {
     return {
@@ -159,7 +160,8 @@ const Dashboard = () => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} >
                         <Box className={classes.gridBox}>
-                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} />
+                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"}  marginBottom={'24px'}/>
+                            <DoubleLineChart/>
                         </Box>
                     </Grid>
                 </Grid>
