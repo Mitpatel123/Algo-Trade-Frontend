@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PageContainer from '../../components/page-container'
 import { Box, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useTheme } from '@mui/material'
 import { makeStyles } from "tss-react/mui";
@@ -9,6 +9,12 @@ import BankNifty from "../../components/Icons/BankNifty.svg"
 import FinNifty from "../../components/Icons/FinNifty.svg"
 import MidCap from "../../components/Icons/MidCap.svg"
 import DoubleLineChart from '../../components/dashboard/DoubleLineChart';
+import MarketSummary from '../../components/dashboard/marketSummary';
+import SellPrice from '../../components/dashboard/SellPrice';
+import BuyPriceTbl from '../../components/dashboard/BuyPriceTbl';
+import CommonModal from '../../components/CommonModal';
+import TradeExecuteModal from '../../components/dashboard/TradeExecuteModal';
+
 const commonTableStyle = {
     '& .MuiTableBody-root ': {
         '& .MuiTableRow-root ': {
@@ -132,6 +138,8 @@ const useStyles = makeStyles()((theme) => {
 const Dashboard = () => {
     const { classes } = useStyles()
     const theme = useTheme()
+    const [isTradeExecute, setIsTradeExecute] = useState(false)
+    console.log(isTradeExecute, "isTradeExecute");
     const data = [
         { icon: Sensex, name: 'Sensex', price: 2351.00, changes: '+1.85%' },
         { icon: FinNifty, name: 'Fin Nifty', price: 2351.00, changes: '-1.85%' },
@@ -165,39 +173,17 @@ const Dashboard = () => {
                     <SummaryGrid amount={5} label={"Today’s P&L"} className={classes.todayPLSummary} />
                 </Grid>
                 <Grid item>
-                    <SummaryGrid label={"Execute Trade"} className={classes.executeTrade} fontSize="29px" />
+                    <SummaryGrid label={"Execute Trade"} className={classes.executeTrade} fontSize="29px" onClick={() => setIsTradeExecute(true)} />
                 </Grid>
                 <Grid item spacing={3} container xs={12} sm={12} md={12} lg={12} xl={12}   >
-                    <Grid item xs={12} sm={12} md={5} lg={5} xxl={5}>
+                    <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
                         <Box className={classes.gridBox}>
-                            <Label color={'white'} fontSize={'23px'} fontWeight={500} text={"Market"} />
-                            <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
                             <TableContainer className={classes.MuiTableContainer}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Name</TableCell>
-                                            <TableCell align="left">Price</TableCell>
-                                            <TableCell align="right">Changes</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {data.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell scope="row" style={{ display: 'flex', gap: 12, alignItems: 'center' }} >
-                                                    <Box className={classes.iconBg}>
-                                                        <img src={row.icon} /></Box> {row.name}
-                                                </TableCell>
-                                                <TableCell align="left">{row.price}</TableCell>
-                                                <TableCell align="right" style={{ color: row.changes.includes('+') ? theme.palette.success.main : theme.palette.error.main }}>{row.changes}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                <MarketSummary data={data} iconBg={classes.iconBg} />
                             </TableContainer>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} >
+                    <Grid item xs={12} sm={12} md={5} lg={7} xl={7} >
                         <Box className={classes.gridBox}>
                             <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} marginBottom={'24px'} />
                             <DoubleLineChart />
@@ -213,29 +199,7 @@ const Dashboard = () => {
                             </Box>
                             <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
                             <TableContainer className={`${classes.MuiTableContainer} ${classes.buyTbl}`}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Name</TableCell>
-                                            <TableCell align="left">Market Price</TableCell>
-                                            <TableCell align="left">Buy Price</TableCell>
-                                            <TableCell align="right">Sell</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {dataBuy.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell scope="row" style={{ display: 'flex', gap: 12, alignItems: 'center' }} >
-                                                    <Box className={classes.iconBg}>
-                                                        <img src={row.icon} /></Box> {row.name}
-                                                </TableCell>
-                                                <TableCell align="left">{row.price}</TableCell>
-                                                <TableCell align="left" style={{ color: theme.palette.info.main }} >{row.buyPrice}</TableCell>
-                                                <TableCell align="right" style={{ color: theme.palette.error.main, textDecoration: 'underline' }}>Sell</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                <BuyPriceTbl data={dataBuy} iconBg={classes.iconBg} />
                             </TableContainer>
                         </Box>
                     </Grid>
@@ -247,43 +211,28 @@ const Dashboard = () => {
                             </Box>
                             <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
                             <TableContainer className={`${classes.MuiTableContainer} ${classes.sellTbl}`}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Name</TableCell>
-                                            <TableCell align="left">Market Price</TableCell>
-                                            <TableCell align="left">Sell Price</TableCell>
-                                            <TableCell align="right">Type</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {dataSell.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell scope="row" style={{ display: 'flex', gap: 12, alignItems: 'center' }} >
-                                                    <Box className={classes.iconBg}>
-                                                        <img src={row.icon} /></Box> {row.name}
-                                                </TableCell>
-                                                <TableCell align="left">{row.price}</TableCell>
-                                                <TableCell align="left" style={{ color: theme.palette.error.main }} >{row.buyPrice}</TableCell>
-                                                <TableCell align="right" style={{ color: theme.palette.success.main, }}>{row.type}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                <SellPrice data={dataSell} iconBg={classes.iconBg} />
+
                             </TableContainer>
                         </Box>
                     </Grid>
                 </Grid>
             </Grid>
-
+            <CommonModal
+                open={isTradeExecute}
+                onClose={() => setIsTradeExecute(false)}
+                title={"Login Credentials"}
+            >
+                <TradeExecuteModal />
+            </CommonModal>
         </PageContainer>
     )
 }
 
-const SummaryGrid = ({ amount, label, className, fontSize, color, width }) => {
+const SummaryGrid = ({ amount, label, className, fontSize, color, width, onClick }) => {
     const { classes } = useStyles()
     return (
-        <Box display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} padding={4} className={className} width={width || '270px'} borderRadius={1.5} >
+        <Box onClick={onClick} display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} padding={4} className={className} width={width || '270px'} borderRadius={1.5} >
             {amount && <Label color={'white'} fontSize={'20px'} fontWeight={450} text={`₹${amount}`} />}
             <Label fontSize={fontSize || "18px"} text={label} />
         </Box>

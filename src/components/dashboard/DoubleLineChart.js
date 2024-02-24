@@ -17,8 +17,8 @@ const DoubleLineChart = () => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="value1" stroke="#8884d8" name="Line 1" />
-      <Line type="monotone" dataKey="value2" stroke="#82ca9d" name="Line 2" />
+      <Line type="monotone" dataKey="value1" stroke="#419DF1" name="Profit" />
+      <Line type="monotone" dataKey="value2" stroke="#FF5555" name="Loss" />
     </LineChart>
   );
 };

@@ -7,6 +7,8 @@ export const defaultInfoColor = "#419DF1";
 export const defaultWarningColor = "#FFBE5E";
 export const defaultError = "#FF5555";
 export const defaultSucces = "#6EBE52";
+export const defaultBgDarkBlack = "#021629";
+export const defaultBgSecondaryDarkBlack = "#163A5C";
 
 export const defaultBgLightBlue = "#EAF4FE";
 export const defaultBgLightBlue2 = "#00AEEF";
@@ -18,7 +20,6 @@ export const defaultBgSuccessColor = "#37bb00de";
 export const defaultBgBlueColor = "#4E85C5";
 export const defaultBgGray = "#777777";
 export const defaultBgBlack = "#444444";
-export const defaultBgDarkBlack = "#222222";
 export const defaultBgLightGreen = "#5EC394";
 export const defaultBgLightBlack = "#B6B6B6";
 export const defaultBackgroundColor = "#CCCCCC";
@@ -87,6 +88,9 @@ export const lightTheme = createTheme({
     bgDarkBlack: {
       main: defaultBgDarkBlack,
     },
+    bgSecondaryDarkBlack: {
+      main: defaultBgSecondaryDarkBlack,
+    },
     bgLightBlack: {
       main: defaultBgLightBlack,
     },
@@ -139,7 +143,18 @@ export const lightTheme = createTheme({
       textTransform: "none",
     },
   },
+
   components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          backgroundColor: defaultInfoColor,
+          color: defaultBgLightWhite,
+          fontSize:16,
+          borderRadius:8
+        },
+      },
+    },
     // Name of the component
     MuiButtonBase: {
       defaultProps: {

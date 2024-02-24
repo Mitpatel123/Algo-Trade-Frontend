@@ -111,7 +111,7 @@ const Dashboard = () => {
     ];
     return (
         <PageContainer>
-            <Grid container xs={12} sm={12} md={12} lg={12} xxl={12} gap={4}>
+            <Grid container xs={12} sm={12} md={12} lg={12} xl={12} gap={4}>
                 <Grid item>
                     <SummaryGrid amount={3} label={"Investment Value"} className={classes.investmentSummary} />
                 </Grid>
@@ -128,7 +128,7 @@ const Dashboard = () => {
                     <SummaryGrid label={"Execute Trade"} className={classes.executeTrade} fontSize="29px" />
                 </Grid>
                 <Grid item spacing={3} container xs={12} sm={12} md={12} lg={12} xl={12}   >
-                    <Grid item xs={12} sm={12} md={5} lg={5} xxl={5}>
+                    <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
                         <Box className={classes.gridBox}>
                             <Label color={'white'} fontSize={'23px'} fontWeight={500} text={"Market"} />
                             <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
@@ -157,7 +157,7 @@ const Dashboard = () => {
                             </TableContainer>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={5} lg={7} xxl={7} >
+                    <Grid item xs={12} sm={12} md={5} lg={7} xl={7} >
                         <Box className={classes.gridBox}>
                             <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} />
                         </Box>

@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "./theme";
 import Login from "./pages/login";
@@ -26,6 +28,7 @@ function App() {
             element={<ProtectedRoute element={<Dashboard />} />}
           />
         </Routes>
+        <ToastContainer />
       </ThemeProvider>
     </BrowserRouter>
   );
