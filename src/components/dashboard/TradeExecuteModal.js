@@ -114,7 +114,7 @@ const TradeExecuteModal = () => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={12} xl={12} textAlign={'center'}>
-            <Button size="large" fullWidth variant="contained" style={{ marginTop: '32px', maxWidth: '300px' }} >Place Order</Button>
+            <Button size="large" fullWidth variant="contained" style={{ marginTop: '10px', maxWidth: '300px' }} >Place Order</Button>
           </Grid>
         </Grid>
       </Grid>

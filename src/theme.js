@@ -9,6 +9,7 @@ export const defaultError = "#FF5555";
 export const defaultSucces = "#6EBE52";
 export const defaultBgDarkBlack = "#021629";
 export const defaultBgSecondaryDarkBlack = "#163A5C";
+export const defaultPrimaryHover = "#44617b";
 
 export const defaultBgLightBlue = "#EAF4FE";
 export const defaultBgLightBlue2 = "#00AEEF";
@@ -136,7 +137,8 @@ export const lightTheme = createTheme({
     bgLightExtraLightGray: {
       main: defaultBgExtraLightGray,
     },
-    background: { default: "#EFEFEF" },
+    background: { default: "#021629" },
+    hover: { main: defaultPrimaryHover }
   },
   typography: {
     button: {
@@ -150,8 +152,8 @@ export const lightTheme = createTheme({
         contained: {
           backgroundColor: defaultInfoColor,
           color: defaultBgLightWhite,
-          fontSize:16,
-          borderRadius:8
+          fontSize: 16,
+          borderRadius: 8
         },
       },
     },
@@ -242,6 +244,7 @@ export const darkTheme = createTheme({
     bgTrendOrange: {
       main: defaultBgTrendOrange,
     },
+    hover: { main: defaultPrimaryHover }
   },
   typography: {
     button: {

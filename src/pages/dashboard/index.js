@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PageContainer from '../../components/page-container'
-import { Box, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useTheme } from '@mui/material'
+import { Box, Divider, Grid, TableContainer, useTheme } from '@mui/material'
 import { makeStyles } from "tss-react/mui";
 import Label from '../../components/common/label';
 import Sensex from "../../components/Icons/Sensex.svg"
@@ -14,6 +14,7 @@ import SellPrice from '../../components/dashboard/SellPrice';
 import BuyPriceTbl from '../../components/dashboard/BuyPriceTbl';
 import CommonModal from '../../components/CommonModal';
 import TradeExecuteModal from '../../components/dashboard/TradeExecuteModal';
+
 
 const commonTableStyle = {
     '& .MuiTableBody-root ': {
@@ -49,7 +50,7 @@ const useStyles = makeStyles()((theme) => {
             border: `2px dashed ${theme.palette.info.main}`,
             color: theme.palette.info.main,
             cursor: 'pointer',
-            padding: '35px'
+            padding: 30
         },
         gridBox: {
             backgroundColor: theme.palette.primary.main,
@@ -140,6 +141,7 @@ const Dashboard = () => {
     const theme = useTheme()
     const [isTradeExecute, setIsTradeExecute] = useState(false)
     console.log(isTradeExecute, "isTradeExecute");
+
     const data = [
         { icon: Sensex, name: 'Sensex', price: 2351.00, changes: '+1.85%' },
         { icon: FinNifty, name: 'Fin Nifty', price: 2351.00, changes: '-1.85%' },
@@ -176,17 +178,20 @@ const Dashboard = () => {
                     <SummaryGrid label={"Execute Trade"} className={classes.executeTrade} fontSize="29px" onClick={() => setIsTradeExecute(true)} />
                 </Grid>
                 <Grid item spacing={3} container xs={12} sm={12} md={12} lg={12} xl={12}   >
-                    <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
+                    <Grid item xs={12} sm={12} md={12} lg={5} xl={5}>
                         <Box className={classes.gridBox}>
                             <TableContainer className={classes.MuiTableContainer}>
                                 <MarketSummary data={data} iconBg={classes.iconBg} />
                             </TableContainer>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={5} lg={7} xl={7} >
+                    <Grid item xs={12} sm={12} md={12} lg={7} xl={7} >
                         <Box className={classes.gridBox}>
-                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} marginBottom={'24px'} />
-                            <DoubleLineChart />
+                            <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} />
+                            <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
+                            <Box display={'flex'} justifyContent={'center'}>
+                                {/* <DoubleLineChart /> */}
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>
@@ -234,7 +239,7 @@ const SummaryGrid = ({ amount, label, className, fontSize, color, width, onClick
     return (
         <Box onClick={onClick} display={'flex'} alignItems={'center'} flexDirection={'column'} justifyContent={'center'} padding={4} className={className} width={width || '270px'} borderRadius={1.5} >
             {amount && <Label color={'white'} fontSize={'20px'} fontWeight={450} text={`₹${amount}`} />}
-            <Label fontSize={fontSize || "18px"} text={label} />
+            <Label fontSize={fontSize || "18px"} text={label} sx={{ lineHeight: '1.9rem' }} />
         </Box>
     )
 }

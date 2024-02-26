@@ -1,3 +1,4 @@
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
@@ -18,8 +19,29 @@ const data = [
 
 
 const SimpleAreaChart = () => {
+  const theme = useTheme()
+
+  const isLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const isXs = useMediaQuery(theme.breakpoints.up('xs'));
+
+  let chartWidth = 850; // Default width
+
+  if (isLg) {
+    chartWidth = 700;
+  } else if (isMd) {
+    chartWidth = 700;
+  } else if (isSm) {
+    chartWidth = 600;
+  } else if (isXs) {
+    chartWidth = 400;
+  }
+
+  console.log(chartWidth, "chartWidth")
+
   return (
-    <AreaChart width={950} height={390} data={data}>
+    <AreaChart width={chartWidth} height={390} data={data} >
       <CartesianGrid strokeDasharray="5 5" vertical={false} /> {/* Set vertical to false */}
       <XAxis dataKey="name" />
       <YAxis />

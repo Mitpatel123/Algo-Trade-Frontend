@@ -38,7 +38,7 @@ const CommonModal = ({ maxWidth, onClose, open, title, content, children, fontSi
             open={open}
             className={classes.dialog_Main}
         >
-            <Box sx={{ padding: { md: "24px", sm: "18px", xs: "12px" }, marginTop: { sm: "12px", xs: "30px" }, ...sx }}>
+            <Box sx={{ padding: "8px 0px", ...sx }}>
                 <Label textAlign="center" variant="h4" fontWeight="600" title={title} />
                 <Box
                     display={"flex"}
@@ -53,7 +53,7 @@ const CommonModal = ({ maxWidth, onClose, open, title, content, children, fontSi
                     X
                 </Box>
             </Box>
-            <DialogContent sx={{ padding: { md: "24px", sm: "18px", xs: "12px" }, ...dialogSx }}>
+            <DialogContent sx={{ padding: '15px 19px', ...dialogSx }}>
                 {children}
             </DialogContent>
         </Dialog>
