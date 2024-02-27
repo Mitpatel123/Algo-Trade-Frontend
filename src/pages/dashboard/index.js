@@ -190,7 +190,7 @@ const Dashboard = () => {
                             <Label fontSize={'23px'} fontWeight={500} text={"Profit And Loss Overview"} />
                             <Divider style={{ backgroundColor: '#163A5C', marginTop: 12, marginBottom: 12 }} />
                             <Box display={'flex'} justifyContent={'center'}>
-                                {/* <DoubleLineChart /> */}
+                                <DoubleLineChart />
                             </Box>
                         </Box>
                     </Grid>

@@ -1,6 +1,15 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { useMediaQuery, useTheme } from '@mui/material';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 
 const data = [
   { name: 'Jan', value1: 10, value2: 15 },
@@ -17,40 +26,39 @@ const data = [
   { name: 'Dec', value1: 51, value2: 45 },
 ];
 
-
 const SimpleAreaChart = () => {
-  const theme = useTheme()
-
-  const isLg = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMd = useMediaQuery(theme.breakpoints.up('md'));
-  const isSm = useMediaQuery(theme.breakpoints.up('sm'));
-  const isXs = useMediaQuery(theme.breakpoints.up('xs'));
-
-  let chartWidth = 850; // Default width
-
-  if (isLg) {
-    chartWidth = 700;
-  } else if (isMd) {
-    chartWidth = 700;
-  } else if (isSm) {
-    chartWidth = 600;
-  } else if (isXs) {
-    chartWidth = 400;
-  }
-
-  console.log(chartWidth, "chartWidth")
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AreaChart width={chartWidth} height={390} data={data} >
-      <CartesianGrid strokeDasharray="5 5" vertical={false} /> {/* Set vertical to false */}
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Area type="monotone" dataKey="value1" stroke="#419DF1" fill="#16324A" name="Profit" strokeWidth={4} />
-      <Area type="monotone" dataKey="value2" stroke="#FF5555" fill="#16324A" name="Loss" strokeWidth={4} />
+    <ResponsiveContainer maxHeight={850} width={'100%'} height={390}>
+    {/* // <ResponsiveContainer width={isSmallScreen ? '100%' : 950} height={isSmallScreen ? 300 : 450}> */}
+      <AreaChart data={data}>
+        <CartesianGrid strokeDasharray="5 5" vertical={false} />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Area
+          type="monotone"
+          dataKey="value1"
+          stroke="#419DF1"
+          fill="#16324A"
+          name="Profit"
+          strokeWidth={4}
+        />
+        <Area
+          type="monotone"
+          dataKey="value2"
+          stroke="#FF5555"
+          fill="#16324A"
+          name="Loss"
+          strokeWidth={4}
+        />
+      </AreaChart>
+      {/* </ResponsiveContainer> */}
 
-    </AreaChart>
+    </ResponsiveContainer>
   );
 };
 
