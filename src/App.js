@@ -7,7 +7,9 @@ import { lightTheme } from "./theme";
 import Login from "./pages/login";
 import Layout from "./components/layout";
 import Dashboard from "./pages/dashboard";
-import User from "./pages/user";
+import User from "./pages/userDetails";
+import UserHistory from "./pages/userDetails/UserHistory";
+import HistoryDetails from "./pages/userDetails/HistoryDetails";
 
 const isAuthenticated = () => {
   return true;
@@ -15,7 +17,11 @@ const isAuthenticated = () => {
 
 // ProtectedRoute component
 const ProtectedRoute = ({ element }) => {
-  return isAuthenticated() ? <Layout>{element}</Layout> : <Navigate to="/login" />;
+  return isAuthenticated() ? (
+    <Layout>{element}</Layout>
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 function App() {
@@ -24,8 +30,22 @@ function App() {
       <ThemeProvider theme={lightTheme}>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
-          <Route path="/user" element={<ProtectedRoute element={<User />} />} />
+          <Route
+            path="/"
+            element={<ProtectedRoute element={<Dashboard />} />}
+          />
+          <Route
+            path="/userDetails"
+            element={<ProtectedRoute element={<User />} />}
+          />
+          <Route
+            path="/userDetails/userHistory"
+            element={<ProtectedRoute element={<UserHistory />} />}
+          />
+          <Route
+            path="/userDetails/historyDetails"
+            element={<ProtectedRoute element={<HistoryDetails />} />}
+          />
         </Routes>
         <ToastContainer />
       </ThemeProvider>
