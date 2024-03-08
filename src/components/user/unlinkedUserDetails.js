@@ -2,8 +2,7 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableRow, useTheme, Box, tableCellClasses, Avatar } from '@mui/material'
 import { makeStyles } from "tss-react/mui";
 import { styled } from '@mui/material/styles';
-import Edit from "../../components/Icons/edit.svg"
-import Label from '../common/label';
+
 
 const useStyles = makeStyles()((theme) => {
     return {
