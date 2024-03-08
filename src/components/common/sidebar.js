@@ -113,6 +113,11 @@ export default function SideBar(props) {
             icon: <DashboardIcon color={location?.pathname === "/" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
             path: "/"
         },
+        {
+            title: "User Details",
+            icon: <DashboardIcon color={location?.pathname === "/user" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
+            path: "/user"
+        },
     ];
 
     return (
@@ -148,8 +153,13 @@ export default function SideBar(props) {
                 <List>
                     {menuIconList?.map((item, index) => (
                         <ListItem key={index} disablePadding sx={{ display: 'block' }} onClick={() => navigate(item?.path)}>
-                            <ListItemButton sx={{ maxHeight: 20, justifyContent: open ? 'initial' : 'center', px: 2, }}>
-                                <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center', }}>
+                            <ListItemButton sx={{ justifyContent: open ? 'initial' : 'center', px: 2, }}>
+                                <ListItemIcon sx={{
+                                    minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',
+
+
+
+                                }}>
                                     {item?.icon}
                                 </ListItemIcon>
                                 <ListItemText primary={item?.title} sx={{ opacity: open ? 1 : 0, color: theme.palette.bgWhite.main }} />

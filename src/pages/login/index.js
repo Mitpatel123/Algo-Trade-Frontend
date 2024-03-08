@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import OtpInput from 'react-otp-input';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import { makeStyles } from "tss-react/mui";
 import { Box, Button, Grid, TextField, useTheme } from '@mui/material'
 
@@ -42,7 +44,7 @@ const Login = () => {
   const [error, setError] = useState()
   const [otp, setOtp] = useState('');
   const [showOpt, setShowOpt] = useState(false)
-
+  const [countryCode, setCountryCode] = useState({})
   const formValidation = () => {
     let validFormValue = true;
     let errors = {};
@@ -63,6 +65,8 @@ const Login = () => {
   };
   console.log(data, "data");
   console.log(data.phoneNumber, "values");
+  console.log(countryCode, "countryCode");
+  // const [countryCode, remainingPhoneNumber] = phoneNumber.split(' ');
 
   return (
     <>
@@ -73,7 +77,7 @@ const Login = () => {
               <Label color={theme.palette.info.main} fontSize={'32px'} fontWeight={500} text={"Welcome Back!"} />
               <Label color={theme.palette.bgWhite.main} marginBottom={'30px'} fontSize={'18px'} text={"Please Enter Details For Sign In"} />
             </Grid>
-            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+            {/* <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <CommonTextField
                 text="Phone Number"
                 size="medium"
@@ -87,6 +91,38 @@ const Login = () => {
                 fontSize="12px"
                 title={!data?.phoneNumber ? error?.phoneNumber : " "}
               />
+            </Grid> */}
+            <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+              <p style={{ color: 'pink' }}>
+                {countryCode?.dialCode}
+              </p>
+
+
+              <PhoneInput
+                country={'us'}
+                value={data?.phoneNumber || ''}
+                onChange={(phoneNumber, event) => {
+                  console.log(event, 'event');
+                  setData({
+                    ...data,
+                    phoneNumber
+                  });
+                }}
+                inputStyle={{
+                  width: '100%',
+                  height: '46px',
+                  backgroundColor: theme.palette.bgSecondaryDarkBlack.main,
+                  border: 'none',
+                  borderRadius: 8,
+                  color: theme.palette.bgWhite.main,
+                  fontSize: 18,
+                  [theme.breakpoints.down('md')]: {
+                    width: '100%',
+                  }
+                }}
+              />
+
+
             </Grid>
             {showOpt ? <>  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Label color={theme.palette.bgWhite.main} text={"OTP"} sx={{ fontSize: { md: "18px", sm: "14px", xs: "14px" } }} />
