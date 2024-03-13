@@ -9,6 +9,10 @@ import authImg from '../../components/Icons/authImg.png'
 import AuthLayout from '../../components/common/AuthLayout';
 import Label from '../../components/common/label';
 import CommonTextField from '../../components/commonTextField';
+import axios from "../../apiSetup/axios";
+import { useAppContext } from '../../context';
+import { useNavigate } from 'react-router-dom';
+
 const useStyles = makeStyles()((theme) => {
   return {
     authBg: {
@@ -38,7 +42,9 @@ const useStyles = makeStyles()((theme) => {
 const Login = () => {
   const { classes } = useStyles()
   const theme = useTheme()
+  const navigate = useNavigate()
   // const setFullPageLoader = usePageLoader();
+  const { OnUpdateError, toggleLoader, user, onUpdateUser, menuList } = useAppContext();
 
   const [data, setData] = React.useState({});
   const [error, setError] = useState()
@@ -57,16 +63,42 @@ const Login = () => {
     setError(errors);
     return validFormValue;
   };
+
   const handleSubmit = async (values) => {
     if (formValidation()) {
-      setShowOpt(true);
-      console.log(data.phoneNumber, "values");
+      if (!showOpt) {
+        setShowOpt(true);
+        let body = {
+          phoneNumber: data?.phoneNumber?.substring(data?.countryCode?.length),
+          role: 1
+        }
+        axios.post('/user/signup', body).then((res) => {
+          if (res?.data?.data) {
+            console.log(res?.data?.data, "object")
+          }
+        })
+          .catch((err) => {
+            console.log('err', err)
+          })
+          .finally(() => { });
+      } else {
+        let body = {
+          phoneNumber: data?.phoneNumber?.substring(data?.countryCode?.length),
+          otp: otp.length ? otp : ''
+        }
+        axios.post('/user/otpverification', body).then((res) => {
+          console.log('res?.data?.data🎈', res?.data?.data)
+          if (res?.data?.data?.code === 1) {
+            localStorage.setItem('token', res?.data?.data?.token);  
+            navigate("/")
+          }
+        }).catch((err) => {
+          console.log('err🎈', err)
+        })
+          .finally(() => { });
+      }
     }
   };
-  console.log(data, "data");
-  console.log(data.phoneNumber, "values");
-  console.log(countryCode, "countryCode");
-  // const [countryCode, remainingPhoneNumber] = phoneNumber.split(' ');
 
   return (
     <>
@@ -102,10 +134,10 @@ const Login = () => {
                 country={'us'}
                 value={data?.phoneNumber || ''}
                 onChange={(phoneNumber, event) => {
-                  console.log(event, 'event');
                   setData({
                     ...data,
-                    phoneNumber
+                    phoneNumber,
+                    countryCode: event?.dialCode
                   });
                 }}
                 inputStyle={{
@@ -121,8 +153,6 @@ const Login = () => {
                   }
                 }}
               />
-
-
             </Grid>
             {showOpt ? <>  <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Label color={theme.palette.bgWhite.main} text={"OTP"} sx={{ fontSize: { md: "18px", sm: "14px", xs: "14px" } }} />
@@ -130,7 +160,7 @@ const Login = () => {
                 <OtpInput
                   value={otp}
                   onChange={setOtp}
-                  numInputs={5}
+                  numInputs={6}
                   renderInput={(props) => <input {...props} />}
                 />
               </Box>

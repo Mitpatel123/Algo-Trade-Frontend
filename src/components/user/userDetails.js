@@ -6,6 +6,12 @@ import { Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow,
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Assets from '../common/image-container';
+import EditIcon from '../Icons/edit.svg';
+import CommonModal from '../CommonModal';
+import EditUserDetails from './editUserDetails';
+import axios from "../../apiSetup/axios";
+import { useAppContext } from '../../context';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         //   backgroundColor: theme.palette.common.black,
@@ -57,13 +63,35 @@ const userData = [
         ],
     },
 ];
+
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const [isTradeExecute, setIsTradeExecute] = React.useState(false)
+    const { OnUpdateError, toggleLoader, user, onUpdateUser, menuList } = useAppContext();
+
+    // const _getVisitor = () => {
+    //     let body = {
+    //         limit: 5,
+    //         page: 1,
+    //         search: "",
+    //     }
+    //     axios.post('/users', body).then((res) => {
+    //         if (res?.data?.data) {
+    //             console.log(res?.data?.data, "object")
+    //         }
+    //     }).catch((err) => {
+    //         OnUpdateError(err.data.message);
+    //     }).finally(() => { });
+    // }
+
+    // React.useEffect(() => {
+    //     _getVisitor()
+    // }, [])
 
     return (
         <>
-            <StyledTableRow >
+            <StyledTableRow onClick={() => setOpen(!open)}>
                 <StyledTableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <Avatar alt={row.name} src="/static/images/avatar/1.jpg" />
@@ -73,20 +101,11 @@ function Row(props) {
                 <StyledTableCell align="left">{row.email}</StyledTableCell>
                 <StyledTableCell align="left">{row.demat_id}</StyledTableCell>
                 <StyledTableCell>
-                    <Assets
-                        src={"/assets/icons/downArrow.svg"}
-                        absolutePath={true}
-                    />
-                    <IconButton
-                        aria-label="expand row"
-                        size="small"
-                        onClick={() => setOpen(!open)} >
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
+                    <img src={EditIcon} onClick={() => setIsTradeExecute(true)} />
                 </StyledTableCell>
             </StyledTableRow>
             <StyledTableRow>
-                <StyledTableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <StyledTableCell style={{ paddingBottom: open ? '16px' : '0', paddingTop: open ? '16px' : '0' }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Grid container spacing={1} xs={12} sm={12} md={12} lg={12} xl={12} >
@@ -127,6 +146,13 @@ function Row(props) {
                     </Collapse>
                 </StyledTableCell>
             </StyledTableRow>
+            <CommonModal
+                open={isTradeExecute}
+                onClose={() => setIsTradeExecute(false)}
+                title={"Login Credentials"}
+            >
+                <EditUserDetails />
+            </CommonModal>
         </>
     );
 }

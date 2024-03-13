@@ -135,7 +135,6 @@ const CommonDropdown = ({
                             fontWeight: fontWeight || "400",
                             fontSize: labelSize || "16px",
                             color: color || '#fff',
-                            backgroundColor: backgroundColor,
                             fontFamily: "poppins",
                         }}
                     >

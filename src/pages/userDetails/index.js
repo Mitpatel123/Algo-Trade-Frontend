@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PageContainer from '../../components/page-container'
-import { Box, Divider, Grid, TableContainer, useTheme } from '@mui/material'
+import { Box, Grid, TableContainer, useTheme } from '@mui/material'
 import { makeStyles } from "tss-react/mui";
 import Label from '../../components/common/label';
 import UserDetails from '../../components/user/userDetails';

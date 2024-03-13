@@ -12,15 +12,21 @@ import UserHistory from "./pages/userDetails/UserHistory";
 import HistoryDetails from "./pages/userDetails/HistoryDetails";
 
 const isAuthenticated = () => {
-  return true;
+  const token = localStorage.getItem('token');
+  if (token) {
+    console.log('here🎈',)
+    return true;
+  } else {
+    console.log('here2🎈')
+    return false;
+  }
 };
 
 // ProtectedRoute component
 const ProtectedRoute = ({ element }) => {
   return isAuthenticated() ? (
     <Layout>{element}</Layout>
-  ) : (
-    <Navigate to="/login" />
+  ) : (window.location.pathname === "/admin/login'" ? <Navigate to="/admin/login" /> : <Navigate to="/login" />
   );
 };
 
@@ -30,6 +36,7 @@ function App() {
       <ThemeProvider theme={lightTheme}>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/login" element={<Login />} />
           <Route
             path="/"
             element={<ProtectedRoute element={<Dashboard />} />}

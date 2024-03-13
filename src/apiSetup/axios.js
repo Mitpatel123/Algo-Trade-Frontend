@@ -4,7 +4,7 @@ import swal from "sweetalert2";
 
 // export const BASE_URL = `${window?.location?.hostname === "localhost" ? "http://localhost:8000/" : "http://shah.webisheet.in/"}`;
 // export const BASE_URL = `http://192.168.1.12:8000/`;
-export const BASE_URL = `https://api.shahsinvestment.com/`;
+export const BASE_URL = `http://13.233.150.35:6699/`;
 export const Image_BASE_URL = "https://shahinvestment.s3.ap-south-1.amazonaws.com/";
 
 const instance = axios.create({ baseURL: BASE_URL });

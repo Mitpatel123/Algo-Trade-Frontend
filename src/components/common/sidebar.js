@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import DashboardIcon from '../Icons/dashboard';
+import userIcon from '../Icons/people.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { makeStyles } from "tss-react/mui";
 const drawerWidth = 240;
@@ -50,6 +51,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+    minHeight : '48px !important'
 }));
 
 const AppBar = styled(MuiAppBar, {
@@ -115,8 +117,8 @@ export default function SideBar(props) {
         },
         {
             title: "User Details",
-            icon: <DashboardIcon color={location?.pathname === "/user" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
-            path: "/user"
+            icon: <DashboardIcon color={location?.pathname === "/userDetails" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
+            path: "/userDetails"
         },
     ];
 
@@ -147,7 +149,7 @@ export default function SideBar(props) {
             }}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'rtl' ? <ChevronRightIcon style={{color:'#FFFFFF'}} /> : <ChevronLeftIcon style={{color:'#FFFFFF'}} />}
                     </IconButton>
                 </DrawerHeader>
                 <List>
