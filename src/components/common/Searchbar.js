@@ -3,18 +3,15 @@ import React, { useState } from "react";
 import defaultSearchIcon from "../../components/Icons/search.svg";
 
 const Searchbar = ({
-  maxWidth,
   borderColor,
   borderRadius,
   backgroundColor,
   placeholder,
   customSearchIcon,
   onSearchChange,
+  searchString,
 }) => {
-  const [searchString, setSearchString] = useState("");
-
   const handleChange = (e) => {
-    setSearchString(e.target.value);
     onSearchChange && onSearchChange(e.target.value);
   };
 

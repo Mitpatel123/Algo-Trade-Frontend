@@ -88,6 +88,11 @@ const Login = () => {
         }
         axios.post('/user/otpverification', body).then((res) => {
           console.log('res?.data?.data🎈', res?.data?.data)
+          const userId =
+            res?.data?.data?._id || res?.data?.data?.responsedata?._id;
+
+          localStorage.setItem("id", userId);
+          localStorage.setItem("code", res?.data?.data?.code);
           if (res?.data?.data?.code === 1) {
             localStorage.setItem('token', res?.data?.data?.token);  
             navigate("/")

@@ -21,27 +21,30 @@ import DashboardIcon from '../Icons/dashboard';
 import userIcon from '../Icons/people.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { makeStyles } from "tss-react/mui";
+import HistoryDetailsIcon from "../Icons/historyDetails";
+import UserIcon from "../Icons/users";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: 'hidden',
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
 });
 
 const closedMixin = (theme) => ({
-    transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -55,72 +58,100 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    ...(open && {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    }),
+  }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-        boxSizing: 'border-box',
-        ...(open && {
-            ...openedMixin(theme),
-            '& .MuiDrawer-paper': openedMixin(theme),
-        }),
-        ...(!open && {
-            ...closedMixin(theme),
-            '& .MuiDrawer-paper': closedMixin(theme),
-        }),
-    }),
-);
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
 const useStyles = makeStyles()((theme) => {
-    return {
-
-    };
+  return {};
 });
 
 export default function SideBar(props) {
-    const theme = useTheme();
-    const classes = useStyles()
-    const location = useLocation();
-    const navigate = useNavigate();
-    const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const classes = useStyles();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+ 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  const menuIconList = [
+    {
+      title: "Dashboard",
+      icon: (
+        <DashboardIcon
+          color={
+            location?.pathname === "/"
+              ? theme?.palette?.info?.main
+              : theme?.palette?.primary?.main
+          }
+        />
+      ),
+      path: "/",
+    },
 
-    const menuIconList = [
-        {
-            title: "Dashboard",
-            icon: <DashboardIcon color={location?.pathname === "/" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
-            path: "/"
-        },
-        {
-            title: "User Details",
-            icon: <DashboardIcon color={location?.pathname === "/userDetails" ? theme?.palette?.info?.main : theme?.palette?.primary?.main} />,
-            path: "/userDetails"
-        },
-    ];
+    {
+      title: "User Details",
+      icon: (
+        <DashboardIcon
+          color={
+            location?.pathname === "/userDetails"
+              ? theme?.palette?.info?.main
+              : theme?.palette?.primary?.main
+          }
+        />
+      ),
+      path: "/userDetails",
+    },
+    {
+      title: "Signals",
+      icon: (
+        <DashboardIcon
+          color={
+            location?.pathname === "/signals"
+              ? theme?.palette?.info?.main
+              : theme?.palette?.primary?.main
+          }
+        />
+      ),
+      path: "/signals",
+    },
+  ];
 
     return (
         <Box sx={{ display: 'flex' }}>

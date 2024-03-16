@@ -9,6 +9,8 @@ import MyButton from "../../components/common/MyButton";
 import MyDatePicker from "../../components/common/DatePicker";
 import MySelect from "../../components/common/MySelect";
 import Searchbar from "../../components/common/Searchbar";
+import { useNavigate } from "react-router";
+import { dateCalendarClasses } from "@mui/x-date-pickers";
 
 const HistoryDetails = () => {
   const headers = [
@@ -23,28 +25,28 @@ const HistoryDetails = () => {
     {
       user: { value: "John K D’Souza", imageSrc: userImage },
       email: "John12@gmail.com",
-      dematId: "John12@gmail.com",
+      dematId: "#0123456789",
       date: "14-02-2024",
       profit: "+₹20,000",
     },
     {
-      user: { value: "John K D’Souza", imageSrc: userImage },
-      email: "John12@gmail.com",
-      dematId: "John12@gmail.com",
+      user: { value: "Rahul D’Souza", imageSrc: userImage },
+      email: "rahul12@gmail.com",
+      dematId: "#768796767",
       date: "14-02-2024",
       profit: "+₹20,000",
     },
     {
-      user: { value: "John K D’Souza", imageSrc: userImage },
-      email: "John12@gmail.com",
-      dematId: "John12@gmail.com",
+      user: { value: "Ramesh D’Souza", imageSrc: userImage },
+      email: "ramesh12@gmail.com",
+      dematId: "#345345453",
       date: "14-02-2024",
       profit: "+₹20,000",
     },
     {
-      user: { value: "John K D’Souza", imageSrc: userImage },
-      email: "John12@gmail.com",
-      dematId: "John12@gmail.com",
+      user: { value: "Suresh D’Souza", imageSrc: userImage },
+      email: "suresh12@gmail.com",
+      dematId: "#3159114143",
       date: "14-02-2024",
       profit: "+₹20,000",
     },
@@ -54,7 +56,27 @@ const HistoryDetails = () => {
   const [endDate, setEndDate] = useState("");
   const [cashFlow, setCashFlow] = useState("");
   const [orderType, setOrderType] = useState("");
+  const [searchString, setSearchString] = useState("");
+  const [searchedData, setSearchedData] = useState(rows);
 
+  const navigate = useNavigate();
+
+  const handleRowClick = (data) => {
+    const demateId = data.dematId.replace("#", "");
+    navigate(`/historyDetails/${demateId}`);
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchString(value);
+
+    const filteredData = rows.filter(
+      (data) =>
+        data.user.value.toLowerCase().includes(value.toLowerCase()) ||
+        data.email.toLowerCase().includes(value.toLowerCase()) ||
+        data.dematId.toLowerCase().includes(value.toLowerCase())
+    );
+    setSearchedData(filteredData);
+  };
   return (
     <PageContainer>
       <Stack
@@ -89,7 +111,11 @@ const HistoryDetails = () => {
           }}
         >
           {/* search bar */}
-          <Searchbar onSearchChange={(value) => console.log(value)} />
+          <Searchbar
+            onSearchChange={handleSearchChange}
+            searchString={searchString}
+          />
+
           <Box
             display={{ xs: "grid", sm: "grid", md: "flex", lg: "flex" }}
             justifyContent="end"
@@ -150,9 +176,10 @@ const HistoryDetails = () => {
         <MyTable
           borderRadius="10px"
           headers={headers}
-          rows={rows}
+          rows={searchedData}
           imageColumn="user"
-          Image
+          imageVersion
+          onRowClick={handleRowClick}
         />
       </Box>
     </PageContainer>
