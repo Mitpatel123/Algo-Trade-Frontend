@@ -4,7 +4,6 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { makeStyles } from "tss-react/mui";
 import { Box, Button, Grid, TextField, useTheme } from '@mui/material'
-
 import authImg from '../../components/Icons/authImg.png'
 import AuthLayout from '../../components/common/AuthLayout';
 import Label from '../../components/common/label';
@@ -12,6 +11,7 @@ import CommonTextField from '../../components/commonTextField';
 import axios from "../../apiSetup/axios";
 import { useAppContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
+import { tostify } from '../../components/common/tostify';
 
 const useStyles = makeStyles()((theme) => {
   return {
@@ -64,6 +64,7 @@ const Login = () => {
     return validFormValue;
   };
 
+
   const handleSubmit = async (values) => {
     if (formValidation()) {
       if (!showOpt) {
@@ -94,8 +95,13 @@ const Login = () => {
           localStorage.setItem("id", userId);
           localStorage.setItem("code", res?.data?.data?.code);
           if (res?.data?.data?.code === 1) {
-            localStorage.setItem('token', res?.data?.data?.token);  
-            navigate("/")
+            localStorage.setItem('token', res?.data?.data?.token);
+            if (res?.data?.data?.responsedata?.isVerified == true) {
+              tostify('Login Successfully..', 'success')
+              navigate("/")
+            } else {
+              navigate("/register")
+            }
           }
         }).catch((err) => {
           console.log('err🎈', err)
@@ -133,8 +139,6 @@ const Login = () => {
               <p style={{ color: 'pink' }}>
                 {countryCode?.dialCode}
               </p>
-
-
               <PhoneInput
                 country={'us'}
                 value={data?.phoneNumber || ''}
@@ -175,6 +179,7 @@ const Login = () => {
                 <a style={{ color: theme.palette.info.main, fontSize: '12px' }}> Resend OTP  </a>
               </Grid></> : null}
 
+          
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Button size="large" fullWidth variant="contained" onClick={handleSubmit} style={{ marginTop: '32px' }} >Send</Button>
             </Grid>

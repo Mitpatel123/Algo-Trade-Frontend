@@ -16,14 +16,16 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import DashboardIcon from '../Icons/dashboard';
 import userIcon from '../Icons/people.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { makeStyles } from "tss-react/mui";
 import HistoryDetailsIcon from "../Icons/historyDetails";
 import UserIcon from "../Icons/users";
-
+import { Menu, MenuItem } from '@mui/material';
+import { useAppContext } from '../../context';
+import LogoutIcon from '@mui/icons-material/Logout';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -48,13 +50,13 @@ const closedMixin = (theme) => ({
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    minHeight : '48px !important'
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  minHeight: '48px !important'
 }));
 
 const AppBar = styled(MuiAppBar, {
@@ -100,8 +102,32 @@ export default function SideBar(props) {
   const classes = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAppContext();
+
   const [open, setOpen] = React.useState(false);
- 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -128,7 +154,7 @@ export default function SideBar(props) {
     {
       title: "User Details",
       icon: (
-        <DashboardIcon
+        <UserIcon
           color={
             location?.pathname === "/userDetails"
               ? theme?.palette?.info?.main
@@ -152,59 +178,98 @@ export default function SideBar(props) {
       path: "/signals",
     },
   ];
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={() => {
+        logout()
+        navigate('/login')
+      }}>Logout</MenuItem>
+    </Menu>
+  );
 
-    return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <AppBar position="fixed" open={open}>
-                <Toolbar variant='dense'>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{
-                            marginRight: 3,
-                            ...(open && { display: 'none' }),
-                        }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Logo
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer variant="permanent" open={open} PaperProps={{
-                sx: { backgroundColor: theme.palette.primary.main }
-            }}>
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon style={{color:'#FFFFFF'}} /> : <ChevronLeftIcon style={{color:'#FFFFFF'}} />}
-                    </IconButton>
-                </DrawerHeader>
-                <List>
-                    {menuIconList?.map((item, index) => (
-                        <ListItem key={index} disablePadding sx={{ display: 'block' }} onClick={() => navigate(item?.path)}>
-                            <ListItemButton sx={{ justifyContent: open ? 'initial' : 'center', px: 2, }}>
-                                <ListItemIcon sx={{
-                                    minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar variant='dense'>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 3,
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Logo
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      {renderMenu}
+      <Drawer variant="permanent" open={open} PaperProps={{
+        sx: { backgroundColor: theme.palette.primary.main }
+      }}>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon style={{ color: '#FFFFFF' }} /> : <ChevronLeftIcon style={{ color: '#FFFFFF' }} />}
+          </IconButton>
+        </DrawerHeader>
+        <List>
+          {menuIconList?.map((item, index) => (
+            <ListItem key={index} disablePadding sx={{ display: 'block' }} onClick={() => navigate(item?.path)}>
+              <ListItemButton sx={{ justifyContent: open ? 'initial' : 'center', px: 2, }}>
+                <ListItemIcon sx={{
+                  minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',
 
 
 
-                                }}>
-                                    {item?.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={item?.title} sx={{ opacity: open ? 1 : 0, color: theme.palette.bgWhite.main }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
-            </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, py: 5 }}>
-                {props.children}
-            </Box>
-        </Box>
-    );
+                }}>
+                  {item?.icon}
+                </ListItemIcon>
+                <ListItemText primary={item?.title} sx={{ opacity: open ? 1 : 0, color: theme.palette.bgWhite.main }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
+      <Box component="main" sx={{ flexGrow: 1, py: 5 }}>
+        {props.children}
+      </Box>
+    </Box>
+  );
 }

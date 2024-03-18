@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "./theme";
 import Login from "./pages/login";
@@ -12,6 +10,8 @@ import UserHistory from "./pages/userDetails/UserHistory";
 import HistoryDetails from "./pages/historyDetails/HistoryDetails";
 import UserHistoryDetails from "./pages/historyDetails/User";
 import Signals from "./pages/signals/Signals";
+import Register from "./pages/register";
+
 const isAuthenticated = () => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -39,8 +39,10 @@ function App() {
   return (
     <BrowserRouter basename={"/"}>
       <ThemeProvider theme={lightTheme}>
+
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/admin/login" element={<Login />} />
           {isAdmin ? (
             <Route
@@ -79,7 +81,6 @@ function App() {
             element={<ProtectedRoute element={<Signals />} />}
           />
         </Routes>
-        <ToastContainer />
       </ThemeProvider>
     </BrowserRouter>
   );

@@ -12,7 +12,6 @@ const AppProvider = ({ children }) => {
   const theme = useTheme()
   const [auth_token, setAuth_token] = useState(getLSItem("auth_token"));
   const [sideBarOpen, setSideBarOpen] = useState(true);
-  const [menuList, setMenuList] = useState(getLSItem("menuList") ? JSON.parse(getLSItem("menuList")) : []);
   const [loader, setLoader] = useState(false);
 
   const [deviceToken, setDeviceToken] = useState(
@@ -59,9 +58,11 @@ const AppProvider = ({ children }) => {
     // Perform logout logic here
     removeLSItem("user");
     removeLSItem("auth_token");
+    removeLSItem("token");
+    removeLSItem("code");
+    removeLSItem("id");
     setUser(null);
     setAuth_token(null);
-    setMenuList([])
   };
   const OnUpdateSuccess = (data) => {
     setSuccess(data);
@@ -70,30 +71,7 @@ const AppProvider = ({ children }) => {
     setError(data);
   };
 
-  const getMenuListByRole = () => {
-    toggleLoader();
-    axios.post(`/permissions`).then((res) => {
-      if (res?.data?.data) {
-        const dynamicMenuList = res.data.data.map((menuItem) => {
-          // const matchingIcon = menuIconList.find(e => e?.title === menuItem?.page);
-          // console.log(matchingIcon, "matchingIcon")
-          return {
-            ...menuItem,
-            activeLinks: menuItem.path !== "/" ? menuItem.path.substring(1).split('/').filter(Boolean) : "/",
-            // icon: matchingIcon?.icon || null,
-          };
-        });
-        console.log(dynamicMenuList, "dynamicMenuList")
-        setLSItem("menuList", JSON.stringify(dynamicMenuList));
-        setMenuList(dynamicMenuList);
-      }
-      toggleLoader();
-    }).catch((err) => {
-      toggleLoader();
-      console.log(err, "err.data.message")
-      OnUpdateError(err.data.message);
-    });
-  }
+
 
 
   const toggleLoader = () => {
@@ -136,9 +114,7 @@ const AppProvider = ({ children }) => {
         OnUpdateWishList,
         onUpdateUserType,
         toggleSideBar,
-        getMenuListByRole,
         deviceToken,
-        menuList,
       }}
     >
       {children}

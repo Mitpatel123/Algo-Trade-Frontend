@@ -1,11 +1,11 @@
 import {
-    InputLabel,
-    OutlinedInput,
-    Typography,
-    Box,
-    InputAdornment,
-    IconButton,
-    TextField,
+  InputLabel,
+  OutlinedInput,
+  Typography,
+  Box,
+  InputAdornment,
+  IconButton,
+  TextField,
 } from "@mui/material";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
@@ -21,7 +21,7 @@ const useStyles = makeStyles()((theme) => {
       // minWidth: "50px",
       // border: 'none !important',
       "& .MuiInputBase-input": {
-        // height: "15px",
+        height: "15px",
         // backgroundColor: !bgcolor && "#163A5C",
         borderRadius: "8px !important",
         [theme.breakpoints.down("md")]: {
@@ -187,13 +187,12 @@ const CommonTextField = ({
           backgroundColor: bgcolor,
           color: color,
           borderRadius: borderRadius,
-          padding:inputPadding
+          padding: inputPadding
         }}
         multiline={multiline}
         rows={rows}
-        className={`${classes?.main} ${className} ${
-          noBorder && classes.noBorder
-        }`}
+        className={`${classes?.main} ${className} ${noBorder && classes.noBorder
+          }`}
         onInput={onInput}
         onPaste={onPaste}
         inputProps={inputProps}
