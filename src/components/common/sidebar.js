@@ -148,7 +148,7 @@ export default function SideBar(props) {
           }
         />
       ),
-      path: "/",
+      path: "/userDashboard",
     },
 
     {
@@ -169,13 +169,13 @@ export default function SideBar(props) {
       icon: (
         <DashboardIcon
           color={
-            location?.pathname === "/signals"
+            location?.pathname === "/userDetails/signals"
               ? theme?.palette?.info?.main
               : theme?.palette?.primary?.main
           }
         />
       ),
-      path: "/signals",
+      path: "/userDetails/signals",
     },
   ];
   const menuId = 'primary-search-account-menu';
@@ -198,7 +198,12 @@ export default function SideBar(props) {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={() => {
         logout()
-        navigate('/login')
+        console.log("localStorage.getItem('userType')",localStorage.getItem('userType'))
+        if (+localStorage.getItem('userType') == 0) {
+          navigate('/admin/login')
+        }else{
+          navigate('/login')
+        }
       }}>Logout</MenuItem>
     </Menu>
   );

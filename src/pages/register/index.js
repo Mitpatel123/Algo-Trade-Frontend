@@ -63,7 +63,7 @@ const Register = () => {
             axios.post('/user/updateuser', body).then((res) => {
                 if (res?.data?.data?.code === 1) {
                     tostify('success', res?.data?.data?.message)
-                    navigate("/")
+                    navigate("/userDashboard")
                 }
             }).catch((err) => {
                 console.log(err, "errerr")

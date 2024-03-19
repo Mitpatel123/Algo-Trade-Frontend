@@ -71,7 +71,7 @@ const Login = () => {
         setShowOpt(true);
         let body = {
           phoneNumber: data?.phoneNumber?.substring(data?.countryCode?.length),
-          role: 1
+          role: window.location.pathname === "/admin/login" ? 0 : 1
         }
         axios.post('/user/signup', body).then((res) => {
           if (res?.data?.data) {
@@ -88,17 +88,19 @@ const Login = () => {
           otp: otp.length ? otp : ''
         }
         axios.post('/user/otpverification', body).then((res) => {
-          console.log('res?.data?.data🎈', res?.data?.data)
-          const userId =
-            res?.data?.data?._id || res?.data?.data?.responsedata?._id;
-
+          const userId =res?.data?.data?._id || res?.data?.data?.responsedata?._id;
           localStorage.setItem("id", userId);
           localStorage.setItem("code", res?.data?.data?.code);
           if (res?.data?.data?.code === 1) {
             localStorage.setItem('token', res?.data?.data?.token);
+            localStorage.setItem('userType', res?.data?.data?.userType);
             if (res?.data?.data?.responsedata?.isVerified == true) {
               tostify('Login Successfully..', 'success')
-              navigate("/")
+              if (res?.data?.data?.userType === 0) {
+                navigate("/adminDashboard")
+              }else{
+                navigate("/userDashboard")
+              }
             } else {
               navigate("/register")
             }
@@ -179,7 +181,7 @@ const Login = () => {
                 <a style={{ color: theme.palette.info.main, fontSize: '12px' }}> Resend OTP  </a>
               </Grid></> : null}
 
-          
+
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Button size="large" fullWidth variant="contained" onClick={handleSubmit} style={{ marginTop: '32px' }} >Send</Button>
             </Grid>

@@ -15,7 +15,8 @@ import { formatStockName, getStockImage } from "../../utils/helper";
 const BuyPriceTbl = ({ setIsSellTrade, setSellTradeData, iconBg }) => {
   const theme = useTheme();
   const [data, setData] = useState([]);
-  const isAdmin = localStorage.getItem("code") == 1 ? true : false;
+  // const isAdmin = localStorage.getItem("code") == 1 ? true : false;
+  const isAdmin = localStorage.getItem("userType") == 0 ? true : false;
 
   const getdata = () => {
     axios

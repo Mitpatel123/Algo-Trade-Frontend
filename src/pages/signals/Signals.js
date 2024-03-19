@@ -61,7 +61,7 @@ const Signals = () => {
       <Box backgroundColor="#0B253D" borderRadius="10px">
         {Object.entries(data).map(([key, item], index) => (
           <>
-            {item.symbol && (
+             (
               <SignalCard
                 key={index}
                 id={item._id}
@@ -72,7 +72,7 @@ const Signals = () => {
                 setQuantityModalId={setQuantityModalId}
                 quantityModalId={quantityModalId}
               />
-            )}
+            )
           </>
         ))}
       </Box>
