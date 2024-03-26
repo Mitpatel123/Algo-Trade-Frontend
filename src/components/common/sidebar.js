@@ -102,8 +102,7 @@ export default function SideBar(props) {
   const classes = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
-  const { logout } = useAppContext();
-
+  const { logout, userType } = useAppContext();
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -142,13 +141,13 @@ export default function SideBar(props) {
       icon: (
         <DashboardIcon
           color={
-            location?.pathname === "/"
+            location?.pathname === (localStorage.getItem("userType") == 1 ? "/userDashboard" : "/adminDashboard")
               ? theme?.palette?.info?.main
               : theme?.palette?.primary?.main
           }
         />
       ),
-      path: "/userDashboard",
+      path: localStorage.getItem("userType") == 1 ? "/userDashboard" : "/adminDashboard",
     },
 
     {
@@ -156,28 +155,29 @@ export default function SideBar(props) {
       icon: (
         <UserIcon
           color={
-            location?.pathname === "/userDetails"
+            location?.pathname === (localStorage.getItem("userType") == 1 ? "/userDetails" : "/adminDetails")
               ? theme?.palette?.info?.main
               : theme?.palette?.primary?.main
           }
         />
       ),
-      path: "/userDetails",
+      path: localStorage.getItem("userType") == 1 ? "/userDetails" : "/adminDetails",
     },
     {
       title: "Signals",
       icon: (
         <DashboardIcon
           color={
-            location?.pathname === "/userDetails/signals"
+            location?.pathname === (localStorage.getItem("userType") == 1 ? "/userDetails/signals" : "/adminDetails/userHistory")
               ? theme?.palette?.info?.main
               : theme?.palette?.primary?.main
           }
         />
       ),
-      path: "/userDetails/signals",
+      path: localStorage.getItem("userType") == 1 ? "/userDetails/signals" : "/adminDetails/userHistory",
     },
   ];
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -198,10 +198,10 @@ export default function SideBar(props) {
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={() => {
         logout()
-        console.log("localStorage.getItem('userType')",localStorage.getItem('userType'))
+        console.log("localStorage.getItem('userType')", localStorage.getItem('userType'))
         if (+localStorage.getItem('userType') == 0) {
           navigate('/admin/login')
-        }else{
+        } else {
           navigate('/login')
         }
       }}>Logout</MenuItem>
@@ -259,9 +259,6 @@ export default function SideBar(props) {
               <ListItemButton sx={{ justifyContent: open ? 'initial' : 'center', px: 2, }}>
                 <ListItemIcon sx={{
                   minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',
-
-
-
                 }}>
                   {item?.icon}
                 </ListItemIcon>

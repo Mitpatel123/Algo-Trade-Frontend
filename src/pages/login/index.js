@@ -64,7 +64,6 @@ const Login = () => {
     return validFormValue;
   };
 
-
   const handleSubmit = async (values) => {
     if (formValidation()) {
       if (!showOpt) {
@@ -88,7 +87,7 @@ const Login = () => {
           otp: otp.length ? otp : ''
         }
         axios.post('/user/otpverification', body).then((res) => {
-          const userId =res?.data?.data?._id || res?.data?.data?.responsedata?._id;
+          const userId = res?.data?.data?._id || res?.data?.data?.responsedata?._id;
           localStorage.setItem("id", userId);
           localStorage.setItem("code", res?.data?.data?.code);
           if (res?.data?.data?.code === 1) {
@@ -98,7 +97,7 @@ const Login = () => {
               tostify('Login Successfully..', 'success')
               if (res?.data?.data?.userType === 0) {
                 navigate("/adminDashboard")
-              }else{
+              } else {
                 navigate("/userDashboard")
               }
             } else {

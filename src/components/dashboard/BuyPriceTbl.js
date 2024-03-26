@@ -84,13 +84,13 @@ const BuyPriceTbl = ({ setIsSellTrade, setSellTradeData, iconBg }) => {
               <TableCell
                 align="right"
                 onClick={() => {
-                  setIsSellTrade(true);
+                  setIsSellTrade(false);
                   setSellTradeData(row);
                 }}
                 style={{
                   color: theme.palette.error.main,
-                  textDecoration: "underline",
-                  cursor: "pointer",
+                  // textDecoration: "underline",
+                  // cursor: "pointer",
                 }}
               >
                 Sell
