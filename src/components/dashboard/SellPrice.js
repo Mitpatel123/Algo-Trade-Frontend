@@ -15,18 +15,14 @@ import { formatStockName, getStockImage } from "../../utils/helper";
 const SellPrice = (props) => {
   const theme = useTheme();
   const date = new Date();
-  const fullDate = `${date.getMonth() + 1}/${
-    date.getDate() - 1
-  }/${date.getFullYear()}`;
-
+  const fullDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   const [sellData, setSellData] = useState([]);
   const isAdmin = localStorage.getItem("code") == 1 ? true : false;
+  const userId = localStorage.getItem("id");
+
   const getdata = () => {
     axios
-      .post(`${BASE_URL}admin/getselltrade`, {
-        type: 0,
-        date: fullDate,
-      })
+      .post(`${BASE_URL}admin/getselltrade`, { date: fullDate, id: userId, })
       .then((response) => {
         setSellData(response.data.data);
       })
