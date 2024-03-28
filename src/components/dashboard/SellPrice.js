@@ -22,7 +22,7 @@ const SellPrice = (props) => {
 
   const getdata = () => {
     axios
-      .post(`${BASE_URL}admin/getselltrade`, { date: fullDate, id: userId, })
+      .post(`${BASE_URL}admin/getselltrade`, { date: fullDate, id: userId })
       .then((response) => {
         setSellData(response.data.data);
       })
