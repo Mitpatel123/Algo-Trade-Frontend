@@ -11,6 +11,8 @@ import HistoryDetails from "./pages/historyDetails/HistoryDetails";
 import Register from "./pages/register";
 import SignalCard from "./components/SignalCard";
 import Signals from "./pages/signals/Signals";
+import QueryTicket from "./pages/adminQueryTicket";
+import TicketDescription from "./pages/ticketDescription";
 
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -48,6 +50,10 @@ function App() {
           <Route path="/adminDetails" element={<ProtectedAdminRoute element={<User />} />} />
           <Route path="/adminDetails/userHistory" element={<ProtectedAdminRoute element={<UserHistory />} />} />
           <Route path="/adminDetails/historyDetails" element={<ProtectedAdminRoute element={<HistoryDetails />} />} />
+          <Route path="/adminQueryTicket" element={<ProtectedAdminRoute element={<QueryTicket />} />} />
+          <Route path="/adminTicketDescription" element={<ProtectedAdminRoute element={<TicketDescription />} />} />
+
+
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

@@ -149,7 +149,6 @@ export default function SideBar(props) {
       ),
       path: localStorage.getItem("userType") == 1 ? "/userDashboard" : "/adminDashboard",
     },
-
     {
       title: "User Details",
       icon: (
@@ -175,6 +174,32 @@ export default function SideBar(props) {
         />
       ),
       path: localStorage.getItem("userType") == 1 ? "/userDetails/signals" : "/adminDetails/userHistory",
+    },
+    {
+      title: "Query Ticket",
+      icon: (
+        <DashboardIcon
+          color={
+            location?.pathname === (localStorage.getItem("userType") == 1 ? "/adminQueryTicket" : "/adminQueryTicket")
+              ? theme?.palette?.info?.main
+              : theme?.palette?.primary?.main
+          }
+        />
+      ),
+      path: localStorage.getItem("userType") == 1 ? "/adminQueryTicket" : "/adminQueryTicket",
+    },
+    {
+      title: "Ticket Description",
+      icon: (
+        <UserIcon
+          color={
+            location?.pathname === (localStorage.getItem("userType") == 1 ? "/adminTicketDescription" : "/adminTicketDescription")
+              ? theme?.palette?.info?.main
+              : theme?.palette?.primary?.main
+          }
+        />
+      ),
+      path: localStorage.getItem("userType") == 1 ? "/adminTicketDescription" : "/adminTicketDescription",
     },
   ];
 
